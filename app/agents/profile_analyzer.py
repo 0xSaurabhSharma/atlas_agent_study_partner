@@ -1,51 +1,28 @@
 import json
+from langchain_core.messages import SystemMessage, HumanMessage
 from app.graph.state import AcademicState
-from langchain_core.messages import HumanMessage
 from app.services.llm_service import LLMService
-from app.agents.base import ReActAgent
-from typing import Dict
+from app.prompts.prompts import PROFILE_ANALYZER_PROMPT
 
-class AdvisorAgent(ReActAgent):
-    """Provides personalized academic guidance and time management advice."""
+async def profile_analyzer_agent(state: AcademicState, llm_service: LLMService) -> dict:
+    """
+    Analyzes the student profile to extract key learning patterns. 
+    """
+    print("--- (Node) Executing Profile Analyzer Agent ---")
+    profile = state.get("profile", {})
+    
+    prompt = PROFILE_ANALYZER_PROMPT.format(profile=json.dumps(profile, indent=2))
     
     # *** CORRECTED LOGIC ***
-    def __init__(self, llm_service: LLMService):
-        super().__init__(llm_service)
-        
-    async def analyze_situation(self, state: AcademicState) -> Dict:
-        profile = state["profile"]
-        prompt = f"""
-        Analyze the student's situation based on their profile and current request to determine the best guidance approach.
-        - Profile: {json.dumps(profile)}
-        - Request: {state['messages'][-1].content}
-        Analyze: Current challenges, learning style compatibility, time/stress management needs.
-        """
-        # messages = [{"role": "system", "content": prompt}]
-        messages = [HumanMessage(content=prompt)]
-        
-        llm = self.llm_service.get_llm()
-        response_obj = await llm.ainvoke(messages)
-        return {"results": {"situation_analysis": {"analysis": response_obj.content}}}
-
-    async def generate_guidance(self, state: AcademicState) -> Dict:
-        analysis = state["results"].get("situation_analysis", {})
-        prompt = f"""
-        Generate personalized academic guidance based on the analysis.
-        ANALYSIS: {analysis.get('analysis', 'N/A')}
-        FORMAT: Provide actionable steps for schedule optimization, energy management, support strategies, and emergency protocols.
-        """
-        # messages = [{"role": "system", "content": prompt}]
-        messages = [HumanMessage(content=prompt)]
-        
-        llm = self.llm_service.get_llm()
-        response_obj = await llm.ainvoke(messages)
-        return {"results": {"advisor_output": {"advice": response_obj.content}}}
+    llm = llm_service.get_llm()
+    # Using the original message structure from the reference code
+    messages = [
+        {"role": "system", "content": prompt},
+        {"role": "user", "content": json.dumps(profile)}
+    ]
+    response_obj = await llm.ainvoke(messages)
     
-    
-    
-
-    
-    
+    return {"results": {"profile_analysis": {"analysis": response_obj.content}}}
 
 
 
@@ -62,10 +39,6 @@ if __name__ == "__main__":
     from langchain_core.messages import HumanMessage
     from app.agents.coordinator import coordinator_agent
     from app.agents.planner import PlannerAgent
-    from app.agents.profile_analyzer import profile_analyzer_agent
-    from app.agents.notewriter import NoteWriterAgent
-    from app.agents.advisor import AdvisorAgent
-
 
     async def main_test():
         """A self-contained async function to test the coordinator agent."""
@@ -118,28 +91,7 @@ if __name__ == "__main__":
         plan_res = await planner.plan_generator(mock_state)
         print("   ↳ Final Plan Output:", plan_res['results']['planner_output']['plan'][:200] + "...")
         print("\n✅ Planner agent test passed!")
-        
-        
-        
-        # Test NoteWriter Agent
-        print("\n[5. Testing NoteWriter Agent...]")
-        notewriter = NoteWriterAgent(llm_service)
-        notes_res = await notewriter.generate_notes(mock_state)
-        print("   ↳ Notes Output:", notes_res['results']['notewriter_output']['notes'][:200] + "...")
-        print("\n✅ Notewriter agent test passed!")
 
-
-
-        # Test Advisor Agent
-        print("\n[6. Testing Advisor Agent...]")
-        advisor = AdvisorAgent(llm_service)
-        style_analysis = advisor.analyze_situation(mock_state)
-        print("style..........")
-        advice_res = await advisor.generate_guidance(mock_state)
-        print("   ↳ Advice Output:", advice_res['results']['advisor_output']['advice'][:200] + "...")
-        print("\n✅ Advisor agent test passed!")
-        
-        print("\n✅ All agent tests completed successfully!")
 
 
 
@@ -147,4 +99,4 @@ if __name__ == "__main__":
     try:
         asyncio.run(main_test())
     except Exception as e:
-        print(f"An error occurred during the test: {e}")        
+        print(f"An error occurred during the test: {e}")
