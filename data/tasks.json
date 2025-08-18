@@ -1,1 +1,16 @@
-[]
+{
+    "tasks": [
+      {
+        "title": "Chapter 3 Summary",
+        "due": "2025-08-21T23:59:59Z",
+        "status": "needsAction",
+        "notes": "Summarize key concepts from the Cognitive Psychology textbook."
+      },
+      {
+        "title": "Statistics Problem Set",
+        "due": "2025-08-23T23:59:59Z",
+        "status": "needsAction",
+        "notes": "Complete problems 1-15 on probability distributions."
+      }
+    ]
+  }

@@ -1,1 +1,34 @@
-{}
+{
+    "profiles": [
+      {
+        "id": "student_123",
+        "personal_info": {
+          "name": "Sarah",
+          "major": "Psychology",
+          "academic_year": 3
+        },
+        "learning_preferences": {
+          "learning_style": {
+            "primary": "visual",
+            "secondary": "kinesthetic"
+          },
+          "study_patterns": {
+            "peak_energy": "late_morning",
+            "preferred_environment": "quiet_library"
+          }
+        },
+        "academic_info": {
+          "current_courses": [
+            {
+              "name": "Cognitive Psychology",
+              "grade": "B+"
+            },
+            {
+              "name": "Statistics for Behavioral Sciences",
+              "grade": "A-"
+            }
+          ]
+        }
+      }
+    ]
+  }

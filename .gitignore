@@ -138,3 +138,15 @@ dmypy.json
 cython_debug/
 
 # End of https://mrkandreev.name/snippets/gitignore-generator/#Python
+
+
+
+
+
+scratch.py
+atlas.py
+scratch.md 
+test.py 
+test2.py
+prompt.py 
+project_summary.txt 

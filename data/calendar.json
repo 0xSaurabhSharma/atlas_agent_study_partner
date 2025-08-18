@@ -1,1 +1,22 @@
-[]
+{
+    "events": [
+      {
+        "summary": "Neuroscience Club Meeting",
+        "start": {
+          "dateTime": "2025-08-19T16:00:00Z"
+        },
+        "end": {
+          "dateTime": "2025-08-19T17:00:00Z"
+        }
+      },
+      {
+        "summary": "Study Group for Stats",
+        "start": {
+          "dateTime": "2025-08-20T10:00:00Z"
+        },
+        "end": {
+          "dateTime": "2025-08-20T12:00:00Z"
+        }
+      }
+    ]
+  }
