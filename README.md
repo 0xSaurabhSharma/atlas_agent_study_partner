@@ -8,9 +8,6 @@ You can copy and paste this directly into your `README.md` file.
 
 ![Atlas Workflow Graph](https://github.com/0xSaurabhSharma/atlas_agent_study_partner/blob/master/atlas_workflow_graph.png)
 
----
-
-<img src="./atlas_workflow_graph.png" alt="ATLAS Workflow" width="600"/>
 
 ATLAS is an intelligent multi-agent system designed to provide personalized academic support to students. By leveraging a team of specialized AI agents, ATLAS can analyze a student's unique learning style, manage their schedule, and generate tailored study materials to help them overcome academic challenges. This project serves as a powerful demonstration of coordinated AI, where multiple agents collaborate to solve a complex, real-world problem.
 
