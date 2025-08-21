@@ -65,7 +65,7 @@ class PlannerAgent(ReActAgent):
         profile_analysis = state.get("results", {}).get("profile_analysis", {}).get("analysis", "No profile analysis provided.")
         calendar_analysis = state.get("results", {}).get("calendar_analysis", {}).get("analysis", "No calendar analysis provided.")
         task_analysis = state.get("results", {}).get("task_analysis", {}).get("analysis", "No task analysis provided.")
-        request = state["messages"][-1].content
+        request = state["atlas_message"][-1].content
         
         prompt = PLANNER_PROMPT.format(
             profile_analysis=profile_analysis,
@@ -124,7 +124,7 @@ if __name__ == "__main__":
         # --- 2. Create a Mock State for the Agent to Use ---
         user_request = "Help me plan my study schedule for next week for my Cognitive Psychology midterm."
         mock_state = AcademicState(
-            messages=[HumanMessage(content=user_request)],
+            atlas_message=[HumanMessage(content=user_request)],
             profile=data_manager.get_student_profile("student_123"),
             calendar={"events": data_manager.get_upcoming_events()},
             tasks={"tasks": data_manager.get_active_tasks()},

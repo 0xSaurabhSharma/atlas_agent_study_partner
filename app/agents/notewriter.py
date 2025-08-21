@@ -21,7 +21,7 @@ class NoteWriterAgent(ReActAgent):
         prompt = f"""
         Analyze content requirements based on the student's learning style and request.
         - Learning Style: {json.dumps(learning_style)}
-        - Request: {state['messages'][-1].content}
+        - Request: {state['atlas_message'][-1].content}
         Focus on: Key Topics (80/20 principle), Learning Style Adaptations, and Quick Reference Format.
         """
         # prompt = [{"role": "system", "content": prompt}]
@@ -36,7 +36,7 @@ class NoteWriterAgent(ReActAgent):
         prompt = f"""
         Create concise, high-impact study materials based on the analysis.
         ANALYSIS: {analysis.get('analysis', 'N/A')}
-        REQUEST: {state['messages'][-1].content}
+        REQUEST: {state['atlas_message'][-1].content}
         FORMAT: **INTENSIVE STUDY GUIDE** with weekly/daily focus areas and core concepts.
         """
         # prompt = [{"role": "system", "content": prompt}]
@@ -85,7 +85,7 @@ if __name__ == "__main__":
         # --- 2. Create a Mock State for the Agent to Use ---
         user_request = "Help me plan my study schedule for next week for my Cognitive Psychology midterm."
         mock_state = AcademicState(
-            messages=[HumanMessage(content=user_request)],
+            atlas_message=[HumanMessage(content=user_request)],
             profile=data_manager.get_student_profile("student_123"),
             calendar={"events": data_manager.get_upcoming_events()},
             tasks={"tasks": data_manager.get_active_tasks()},

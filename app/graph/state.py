@@ -18,7 +18,9 @@ class AcademicState(TypedDict):
     Master state container for the academic assistance system. [cite: 140-156]
     """
     messages: Annotated[List[BaseMessage], add]
+    atlas_message: Annotated[List[BaseMessage], add]
     profile: Annotated[Dict, dict_reducer]
     calendar: Annotated[Dict, dict_reducer]
     tasks: Annotated[Dict, dict_reducer]
     results: Annotated[Dict[str, Any], dict_reducer]
+    chat_history: Annotated[List[BaseMessage], add]

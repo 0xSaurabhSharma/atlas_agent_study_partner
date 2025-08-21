@@ -18,7 +18,7 @@ class AdvisorAgent(ReActAgent):
         prompt = f"""
         Analyze the student's situation based on their profile and current request to determine the best guidance approach.
         - Profile: {json.dumps(profile)}
-        - Request: {state['messages'][-1].content}
+        - Request: {state['atlas_message'][-1].content}
         Analyze: Current challenges, learning style compatibility, time/stress management needs.
         """
         # messages = [{"role": "system", "content": prompt}]
@@ -82,7 +82,7 @@ if __name__ == "__main__":
         # --- 2. Create a Mock State for the Agent to Use ---
         user_request = "Help me plan my study schedule for next week for my Cognitive Psychology midterm."
         mock_state = AcademicState(
-            messages=[HumanMessage(content=user_request)],
+            atlas_message=[HumanMessage(content=user_request)],
             profile=data_manager.get_student_profile("student_123"),
             calendar={"events": data_manager.get_upcoming_events()},
             tasks={"tasks": data_manager.get_active_tasks()},
